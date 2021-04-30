@@ -1,0 +1,237 @@
+{
+	"info": {
+		"_postman_id": "620fbd06-5cba-428a-966d-ad3c57aacac5",
+		"name": "dummy.restapiexample",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all employee data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//status code\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Staus message\r",
+							"pm.test(\"Body matches string: success\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{UrlRest}}/employees",
+					"host": [
+						"{{UrlRest}}"
+					],
+					"path": [
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a single employee data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//status code\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"Successfully! Record has been fetched.\");\r",
+							"\r",
+							"});\r",
+							"//employee name\r",
+							"\r",
+							"pm.test(\"Body matches employee_name: {{employee_name}}\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Tiger Nixon\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{UrlRest}}/employee/1",
+					"host": [
+						"{{UrlRest}}"
+					],
+					"path": [
+						"employee",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create new record in database",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//success status code\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//success message\r",
+							"pm.test(\"Success message: Successfully! Record has been added.\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Successfully! Record has been added.\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"automation\",\"salary\":\"123\",\"age\":\"23\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{UrlRest}}/create",
+					"host": [
+						"{{UrlRest}}"
+					],
+					"path": [
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update an employee record",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//success message\r",
+							"pm.test(\"Body matches success message\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Successfully! Record has been updated\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"auto\",\"salary\":\"1203\",\"age\":\"30\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{UrlRest}}/update/21",
+					"host": [
+						"{{UrlRest}}"
+					],
+					"path": [
+						"update",
+						"21"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete an employee record",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//success message\r",
+							"pm.test(\"Body matches string: Successfully! Record has been deleted\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Successfully! Record has been deleted\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{UrlRest}}/delete/2",
+					"host": [
+						"{{UrlRest}}"
+					],
+					"path": [
+						"delete",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "UrlRest",
+			"value": "http://dummy.restapiexample.com/api/v1"
+		},
+		{
+			"key": "employee_name",
+			"value": "Tiger Nixon"
+		}
+	]
+}

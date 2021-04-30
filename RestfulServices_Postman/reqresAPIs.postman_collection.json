@@ -1,0 +1,770 @@
+{
+	"info": {
+		"_postman_id": "fe64699c-fbce-4955-b646-32c3c8a44f2e",
+		"name": "reqresAPIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET Folder",
+			"item": [
+				{
+					"name": "ListUsers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//verify Status Code\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string: george.bluth@reqres.in\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"george.bluth@reqres.in\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}api/users?page=1",
+							"host": [
+								"{{BaseUrl}}api"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SingleUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//verify staus code\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    //assertion\r",
+									"    pm.response.to.have.status(200);\r",
+									"    //assertion\r",
+									"    pm.response.to.be.ok;\r",
+									"});\r",
+									"//verify first name\r",
+									"pm.test(\"Body matches string: Rachel\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Rachel\");\r",
+									"});\r",
+									"\r",
+									"//verify email =\r",
+									"pm.test(\"Body matches string : rachel.howell@reqres.in\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"rachel.howell@reqres.in\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}api/users/{{userId}}",
+							"host": [
+								"{{BaseUrl}}api"
+							],
+							"path": [
+								"users",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SingleUserNotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"NOtExist\", \"111\");\r",
+									"pm.collectionVariables.get(\"NOtExist\");\r",
+									"//status code check\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User 111 not found\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.value).to.eql(111);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(950);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}api/users/{{NOtExist}}",
+							"host": [
+								"{{BaseUrl}}api"
+							],
+							"path": [
+								"users",
+								"{{NOtExist}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List <RESOURCE>",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//status check :200\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//name of the color check\r",
+									"\r",
+									"pm.test(\"Body is having name of the color: cerulean\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"cerulean\");\r",
+									"});\r",
+									"\r",
+									"//responce time check <700 ms\r",
+									"pm.test(\"Response time is less than 700ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(700);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}api/unknown",
+							"host": [
+								"{{BaseUrl}}api"
+							],
+							"path": [
+								"unknown"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single <RESOURCE>",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//status check :200\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//all properties of responce\r",
+									"pm.test(\"The response has all properties\", () => {\r",
+									"    //parse the response json and test three properties\r",
+									"    const bodyResponse = pm.response.text();    \r",
+									"    pm.expect(bodyResponse).to.include(\"2001\");\r",
+									"    pm.expect(bodyResponse).to.include(\"fuchsia rose\");\r",
+									"    pm.expect(bodyResponse).to.include(\"#C74375\");\r",
+									"    pm.expect(bodyResponse).to.include(\"17-2031\");\r",
+									"    \r",
+									"});\r",
+									"//responce time check <700 ms\r",
+									"pm.test(\"Response time is less than 700ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(700);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}api/unknown/2",
+							"host": [
+								"{{BaseUrl}}api"
+							],
+							"path": [
+								"unknown",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single <RESOURCE> not found",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}api/unknown/31",
+							"host": [
+								"{{BaseUrl}}api"
+							],
+							"path": [
+								"unknown",
+								"31"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delayed Response",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//status check\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//Responce Time greaterThan 4000 (delay = 4)\r",
+									"pm.test(\"Response time is more than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.greaterThan(4000);\r",
+									"});\r",
+									"\r",
+									"//Responce time lessThan 3000\r",
+									"pm.test(\"Response time is less than 3000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}api/users?{{delay}}",
+							"host": [
+								"{{BaseUrl}}api"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "{{delay}}",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "POST Folder",
+			"item": [
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//status check\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"//name check\r",
+									"pm.test(\"Body matches string : Rhyan\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Rhyan\");\r",
+									"        pm.expect(pm.response.text()).to.include(\"Junior\");\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"New user is created\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var user_name = pm.collectionVariables.get(\"UserName\");\r",
+									"    var user_job = pm.collectionVariables.get(\"UserJob\");\r",
+									"    pm.expect(jsonData.name).to.eql(user_name);\r",
+									"    pm.expect(jsonData.job).to.eql(user_job);\r",
+									"    console.log(\"user name is \" + user_name + \", job is \" + user_job);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{UserName}}\",\r\n    \"job\": \"{{UserJob}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}api/users",
+							"host": [
+								"{{BaseUrl}}api"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register-SUCCESSFUL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//status code 200\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//Generated Registration id and Token verification\r",
+									"\r",
+									"pm.test(\"Body matches Registration id and token\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"4\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"QpwL5tke4Pnpja7X4\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{User_email}}\",\r\n    \"password\": \"{{User_password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}api/{{register}}",
+							"host": [
+								"{{BaseUrl}}api"
+							],
+							"path": [
+								"{{register}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REGISTER - UNSUCCESSFUL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//status code 400 Bad Request\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"//Error message\r",
+									"\r",
+									"pm.test(\"Body matches Error Message: Missing Password \", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Missing password\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"sydney@fife\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}api/{{register}}",
+							"host": [
+								"{{BaseUrl}}api"
+							],
+							"path": [
+								"{{register}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOGIN - SUCCESSFUL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//status code 200\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//Generated Login Token and verification\r",
+									"\r",
+									"pm.test(\"Body matches Registration id and token\", function () {\r",
+									"  \r",
+									"    pm.expect(pm.response.text()).to.include(\"QpwL5tke4Pnpja7X4\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"cityslicka\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}api/{{login}}",
+							"host": [
+								"{{BaseUrl}}api"
+							],
+							"path": [
+								"{{login}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOGIN - UNSUCCESSFUL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//status code 400 Bad Request\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"//Error message\r",
+									"\r",
+									"pm.test(\"Body matches Error Message: Missing Password \", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Missing password\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"peter@klaven\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}api/{{login}}",
+							"host": [
+								"{{BaseUrl}}api"
+							],
+							"path": [
+								"{{login}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PUT Folder",
+			"item": [
+				{
+					"name": "UPDATE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//status check\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//Check tome of update\r",
+									"\r",
+									"pm.test(\"Body matches with updatedAt: 2021-04-22T01:42:22.206Z\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"2021-04-22T01:42:08.606Z\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"zion resident\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}api/users/2",
+							"host": [
+								"{{BaseUrl}}api"
+							],
+							"path": [
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PATCH Folder",
+			"item": [
+				{
+					"name": "UPDATE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//status code check: \r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"zion resident\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}api/users/2",
+							"host": [
+								"{{BaseUrl}}api"
+							],
+							"path": [
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DELETE Requests",
+			"item": [
+				{
+					"name": "DELETE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}api/users/2",
+							"host": [
+								"{{BaseUrl}}api"
+							],
+							"path": [
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BaseUrl",
+			"value": "https://reqres.in/"
+		},
+		{
+			"key": "userId",
+			"value": "12"
+		},
+		{
+			"key": "userId",
+			"value": ""
+		},
+		{
+			"key": "NOtExist",
+			"value": ""
+		},
+		{
+			"key": "delay",
+			"value": "delay=4"
+		},
+		{
+			"key": "register",
+			"value": "register"
+		},
+		{
+			"key": "login",
+			"value": "login"
+		},
+		{
+			"key": "UserName",
+			"value": "Rhyan"
+		},
+		{
+			"key": "UserJob",
+			"value": "Junior"
+		},
+		{
+			"key": "User_email",
+			"value": "eve.holt@reqres.in"
+		},
+		{
+			"key": "User_password",
+			"value": "pistol"
+		}
+	]
+}

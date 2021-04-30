@@ -1,0 +1,273 @@
+{
+	"info": {
+		"_postman_id": "c75cf09e-db94-4411-80c9-2c65a646164d",
+		"name": "RestGetMethods",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "dog.ceo/api/breeds/list/all",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//success request\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dog.ceo/api/breeds/list/all",
+					"protocol": "https",
+					"host": [
+						"dog",
+						"ceo"
+					],
+					"path": [
+						"api",
+						"breeds",
+						"list",
+						"all"
+					]
+				},
+				"description": "Get the list of all breeds od dog"
+			},
+			"response": []
+		},
+		{
+			"name": "ip.jsontest.com",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//check status code\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//check responce ip \r",
+							"pm.test(\"Body matches ip: 101.98.194.130\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"101.98.194.130\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://ip.jsontest.com/",
+					"protocol": "http",
+					"host": [
+						"ip",
+						"jsontest",
+						"com"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reddit.com",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//status code\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://www.reddit.com/r/javascript.json?utm_source=reddit&utm_medium=usertext&utm_name=javascript&utm_content=t1_drb3cdb",
+					"protocol": "https",
+					"host": [
+						"www",
+						"reddit",
+						"com"
+					],
+					"path": [
+						"r",
+						"javascript.json"
+					],
+					"query": [
+						{
+							"key": "utm_source",
+							"value": "reddit"
+						},
+						{
+							"key": "utm_medium",
+							"value": "usertext"
+						},
+						{
+							"key": "utm_name",
+							"value": "javascript"
+						},
+						{
+							"key": "utm_content",
+							"value": "t1_drb3cdb"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "date.jsontest.com",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Body matches date: 04-30-2021\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"04-30-2021\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://date.jsontest.com/",
+					"protocol": "http",
+					"host": [
+						"date",
+						"jsontest",
+						"com"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "echo.jsontest.com/key/value",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Body matches string: insert-value-here\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"insert-value-here\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://echo.jsontest.com/insert-key-here/insert-value-here/key/value?12vi=111",
+					"protocol": "http",
+					"host": [
+						"echo",
+						"jsontest",
+						"com"
+					],
+					"path": [
+						"insert-key-here",
+						"insert-value-here",
+						"key",
+						"value"
+					],
+					"query": [
+						{
+							"key": "12vi",
+							"value": "111"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "validate.jsontest.com",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//status code: 200\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//sting in body\r",
+							"pm.test(\"Body matches string: array\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"array\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://validate.jsontest.com/?json=%5BJSON-code-to-validate%5D",
+					"protocol": "http",
+					"host": [
+						"validate",
+						"jsontest",
+						"com"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "json",
+							"value": "%5BJSON-code-to-validate%5D"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

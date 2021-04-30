@@ -1,0 +1,329 @@
+{
+	"info": {
+		"_postman_id": "4f41a76e-78a7-47a2-8b3a-20c804bffceb",
+		"name": "SwaggerPet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Finds Pets by status:available",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//check status code\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//check status string value\r",
+							"\r",
+							"pm.test(\"Body matches the status of pets : available\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"available\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{petstore}}/v2/pet/findByStatus?status={{available}}",
+					"host": [
+						"{{petstore}}"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"findByStatus"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "{{available}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Finds Pets by status: sold",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//status check\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//pet status check\r",
+							"pm.test(\"Body matches the pet's status: {{sold}}\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"sold\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{petstore}}/v2/pet/findByStatus?status={{sold}}",
+					"host": [
+						"{{petstore}}"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"findByStatus"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "{{sold}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find pet by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404: not found\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{petstore}}/v2/pet/{{petID}}",
+					"host": [
+						"{{petstore}}"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"{{petID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new pet to the store",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches name : golden\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"golden\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1,\r\n  \"category\": {\r\n    \"id\": 1,\r\n    \"name\": \"string\"\r\n  },\r\n  \"name\": \"golden\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"string\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{petstore}}/v2/pet",
+					"host": [
+						"{{petstore}}"
+					],
+					"path": [
+						"v2",
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Updates a pet in the store with form data",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{petstore}}/v2/pet/1",
+					"host": [
+						"{{petstore}}"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update an existing pet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//pet name\r",
+							"pm.test(\"Body matches pet name: doggie\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"doggie\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\t\r\n{\r\n  \"id\": 0,\r\n  \"category\": {\r\n    \"id\": 0,\r\n    \"name\": \"string\"\r\n  },\r\n  \"name\": \"doggie\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"string\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{petstore}}/v2/pet",
+					"host": [
+						"{{petstore}}"
+					],
+					"path": [
+						"v2",
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deletes a pet",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{petstore}}/v2/pet/9222968140498630388",
+					"host": [
+						"{{petstore}}"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"9222968140498630388"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Pets by Status: available",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{petstore}}/v2/pet/findByStatus?status=available",
+					"host": [
+						"{{petstore}}"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"findByStatus"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "available"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "petstore",
+			"value": "https://petstore.swagger.io"
+		},
+		{
+			"key": "available",
+			"value": "available"
+		},
+		{
+			"key": "sold",
+			"value": "sold"
+		},
+		{
+			"key": "petID",
+			"value": "12"
+		}
+	]
+}
